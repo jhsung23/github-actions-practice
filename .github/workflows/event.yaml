@@ -1,20 +1,20 @@
 name: prepublish-storybook
 
 on:
-  push:
+  pull_request:
+    types:
+      - closed
     paths:
       - 'src/**'
-    branches:
-      - main
 
 jobs:
-  console-event:
+  send_webhook:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+
     steps:
-      - name: comment PR
+      - name: Send webhook notification
         uses: tsickert/discord-webhook@v5.3.0
-        env:
-          ENV: 'envenv'
         with:
           webhook-url: ${{ secrets.WEBHOOK_URL }}
-          content: 'push: ${{ github.event.push.commits[0].message }}'
+          content: '머지된 pr의 제목 ${{ github.event.pull_request.title }}'
