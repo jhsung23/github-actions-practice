@@ -1,0 +1,18 @@
+name: pr
+
+on:
+  pull_request:
+    paths: ['public/**']
+    types: [opened, reopened, synchronize]
+    branches: ['main']
+
+jobs:
+  do:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: comment PR
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: '${{github.event.pull_request.title}}, public에 변경사항이 있습니다.'

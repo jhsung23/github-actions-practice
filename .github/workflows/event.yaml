@@ -17,4 +17,4 @@ jobs:
           ENV: 'envenv'
         with:
           webhook-url: ${{ secrets.WEBHOOK_URL }}
-          content: 'env: $ENV, github.event_name: ${{ github.event_name }}, github.event: ${{github.event}}, github.event_path: ${{ github.event_path }}, github.head_ref: ${{github.head_ref}}, ${{github.action}}'
+          content: 'push: ${{ github.event.push.commits[0].message }}'
