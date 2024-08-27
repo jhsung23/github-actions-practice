@@ -1,0 +1,20 @@
+name: prepublish-storybook
+
+on:
+  push:
+    paths:
+      - 'src/**'
+    branches:
+      - main
+
+jobs:
+  console-event:
+    runs-on: ubuntu-latest
+    steps:
+      - name: comment PR
+        uses: tsickert/discord-webhook@v5.3.0
+        env:
+          ENV: 'envenv'
+        with:
+          webhook-url: ${{ secrets.WEBHOOK_URL }}
+          content: 'env: $ENV, github.event_name: ${{ github.event_name }}, github.event: ${{github.event}}, github.event_path: ${{ github.event_path }}, github.head_ref: ${{github.head_ref}}, ${{github.action}}'
